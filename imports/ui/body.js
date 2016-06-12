@@ -1,5 +1,9 @@
+import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
+
+
+
 
 import {Tasks} from '../api/tasks.js';
 
@@ -7,10 +11,12 @@ import './task.js';
 import './body.html';
 
 
+
 Template.body.onCreated(function bodyOnCreated(){
 this.state = new ReactiveDict();
 
 });
+
 
 
 
@@ -62,6 +68,14 @@ Template.body.events({
 s
 	});
 
+Tasks.insert({
+	text,
+	createdAt:new Date(),
+	owner:Meteor.userId(),
+	username: Meteor.user().username,
+
+});
+
 //clear form
 
 target.text.value='';
@@ -72,6 +86,8 @@ target.text.value='';
 	instance.state.set('hideCompleted',event.target.checked);
 
 },
+
+
 
 });
 
